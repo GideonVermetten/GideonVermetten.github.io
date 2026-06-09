@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Alex Morgan — Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0f0f0f;
+      --surface: #181818;
+      --border: #2a2a2a;
+      --text: #e8e3db;
+      --muted: #888;
+      --accent: #c8a96e;
+      --accent-dim: rgba(200, 169, 110, 0.12);
+      --font-display: 'Playfair Display', serif;
+      --font-body: 'Inter', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      font-weight: 300;
+      line-height: 1.7;
+      min-height: 100vh;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2.5rem;
+      height: 64px;
+      background: rgba(15,15,15,0.92);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      color: var(--accent);
+      letter-spacing: 0.02em;
+      cursor: pointer;
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+    }
+
+    .nav-link {
+      font-size: 0.85rem;
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+    .nav-link:hover { color: var(--text); }
+
+    /* dropdown */
+    .dropdown { position: relative; }
+
+    .dropdown-toggle {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: none;
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.45rem 1rem;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .dropdown-toggle:hover,
+    .dropdown.open .dropdown-toggle {
+      border-color: var(--accent);
+      background: var(--accent-dim);
+      color: var(--accent);
+    }
+
+    .chevron {
+      width: 10px; height: 10px;
+      border-right: 1.5px solid currentColor;
+      border-bottom: 1.5px solid currentColor;
+      transform: rotate(45deg);
+      transition: transform 0.2s;
+      margin-top: -3px;
+    }
+    .dropdown.open .chevron { transform: rotate(-135deg); margin-top: 3px; }
+
+    .dropdown-menu {
+      display: none;
+      position: absolute;
+      top: calc(100% + 10px);
+      right: 0;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      min-width: 200px;
+      overflow: hidden;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.5);
+    }
+    .dropdown.open .dropdown-menu { display: block; }
+
+    .dropdown-item {
+      display: block;
+      padding: 0.75rem 1.25rem;
+      font-size: 0.9rem;
+      color: var(--muted);
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s;
+      border-bottom: 1px solid var(--border);
+    }
+    .dropdown-item:last-child { border-bottom: none; }
+    .dropdown-item:hover { background: var(--accent-dim); color: var(--accent); }
+    .dropdown-item.active { color: var(--accent); background: var(--accent-dim); }
+
+    /* ── MAIN ── */
+    main { padding-top: 64px; }
+
+    /* ── HERO ── */
+    #page-home {
+      min-height: calc(100vh - 64px);
+      display: flex;
+      align-items: center;
+      padding: 5rem 2.5rem;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .hero-inner { max-width: 680px; }
+
+    .hero-eyebrow {
+      font-size: 0.75rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-name {
+      font-family: var(--font-display);
+      font-size: clamp(2.8rem, 6vw, 5rem);
+      font-weight: 700;
+      line-height: 1.08;
+      color: var(--text);
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-name em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .hero-bio {
+      font-size: 1.05rem;
+      color: #b0a898;
+      max-width: 560px;
+      margin-bottom: 2.5rem;
+      line-height: 1.8;
+    }
+
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      background: var(--accent);
+      color: #0f0f0f;
+      font-weight: 500;
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.8rem 1.6rem;
+      border-radius: 4px;
+      cursor: pointer;
+      border: none;
+      transition: opacity 0.2s;
+    }
+    .hero-cta:hover { opacity: 0.85; }
+
+    /* ── CONTENT PAGES ── */
+    .page {
+      display: none;
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 4rem 2.5rem 6rem;
+      animation: fadeUp 0.35s ease;
+    }
+    .page.active { display: block; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .page-header {
+      margin-bottom: 3rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .page-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.75rem;
+    }
+
+    .page-title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    /* Cards */
+    .card-list { display: flex; flex-direction: column; gap: 1.5rem; }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.75rem 2rem;
+      transition: border-color 0.2s;
+    }
+    .card:hover { border-color: var(--accent); }
+
+    .card-meta {
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+    }
+
+    .card-title {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 0.25rem;
+    }
+
+    .card-subtitle {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-bottom: 1rem;
+    }
+
+    .card-body {
+      font-size: 0.95rem;
+      color: #b0a898;
+      line-height: 1.75;
+    }
+
+    /* Skills grid */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1rem;
+    }
+
+    .skill-group { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; }
+
+    .skill-group-title {
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
+
+    .skill-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+
+    .tag {
+      font-size: 0.8rem;
+      background: var(--accent-dim);
+      color: var(--accent);
+      border: 1px solid rgba(200,169,110,0.25);
+      padding: 0.25rem 0.7rem;
+      border-radius: 20px;
+    }
+
+    /* Interests */
+    .interest-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .interest-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.5rem;
+    }
+
+    .interest-icon { font-size: 1.8rem; margin-bottom: 0.75rem; }
+    .interest-name { font-family: var(--font-display); font-size: 1.1rem; margin-bottom: 0.5rem; }
+    .interest-desc { font-size: 0.9rem; color: #b0a898; }
+
+    /* References */
+    .ref-card {
+      background: var(--surface);
+      border-left: 3px solid var(--accent);
+      border-radius: 0 8px 8px 0;
+      padding: 1.75rem 2rem;
+    }
+
+    .ref-quote {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 1.1rem;
+      color: var(--text);
+      margin-bottom: 1.25rem;
+      line-height: 1.6;
+    }
+
+    .ref-name { font-weight: 500; font-size: 0.95rem; }
+    .ref-role { font-size: 0.85rem; color: var(--muted); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 600px) {
+      nav { padding: 0 1.25rem; }
+      #page-home, .page { padding-left: 1.25rem; padding-right: 1.25rem; }
+      .skills-grid { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-logo" onclick="showPage('home')">AM</div>
+    <div class="nav-right">
+      <span class="nav-link" onclick="showPage('home')">About</span>
+      <div class="dropdown" id="nav-dropdown">
+        <button class="dropdown-toggle" onclick="toggleDropdown()">
+          Explore <span class="chevron"></span>
+        </button>
+        <div class="dropdown-menu">
+          <div class="dropdown-item" onclick="showPage('education')">Education</div>
+          <div class="dropdown-item" onclick="showPage('experience')">Work Experience</div>
+          <div class="dropdown-item" onclick="showPage('skills')">Skills</div>
+          <div class="dropdown-item" onclick="showPage('interests')">Interests</div>
+          <div class="dropdown-item" onclick="showPage('references')">References</div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+
+    <!-- HOME -->
+    <section id="page-home" class="active">
+      <div class="hero-inner">
+        <p class="hero-eyebrow">Portfolio — 2024</p>
+        <h1 class="hero-name">Alex<br /><em>Morgan</em></h1>
+        <p class="hero-bio">
+          I'm a software developer and designer with a passion for building products that are both functional and beautiful. Over the past six years I've worked across startups and mid-sized companies, helping teams ship faster and users accomplish more. I believe great software is made at the intersection of technical rigour and genuine empathy for the people using it.
+        </p>
+        <button class="hero-cta" onclick="showPage('experience')">
+          View my work
+          <span style="font-size:1rem;line-height:1">→</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- EDUCATION -->
+    <section id="page-education" class="page">
+      <div class="page-header">
+        <p class="page-label">Background</p>
+        <h2 class="page-title">Education</h2>
+      </div>
+      <div class="card-list">
+        <div class="card">
+          <p class="card-meta">2015 – 2019</p>
+          <h3 class="card-title">BSc Computer Science</h3>
+          <p class="card-subtitle">University of Amsterdam · Amsterdam, Netherlands</p>
+          <p class="card-body">Graduated with distinction. Specialised in human–computer interaction and distributed systems. Final thesis investigated adaptive UI patterns for low-bandwidth environments, receiving a grade of 9.2/10. Active member of the university's ACM student chapter and annual hackathon organiser.</p>
+        </div>
+        <div class="card">
+          <p class="card-meta">2019 – 2021</p>
+          <h3 class="card-title">MSc Software Engineering</h3>
+          <p class="card-subtitle">Delft University of Technology · Delft, Netherlands</p>
+          <p class="card-body">Research focus on developer tooling and continuous delivery pipelines. Co-authored a paper on automated accessibility testing published at ICSE 2021. Received a departmental scholarship for academic excellence during both years of study.</p>
+        </div>
+        <div class="card">
+          <p class="card-meta">2023</p>
+          <h3 class="card-title">AWS Certified Solutions Architect</h3>
+          <p class="card-subtitle">Amazon Web Services · Professional level</p>
+          <p class="card-body">Certified in designing and deploying scalable, fault-tolerant systems on AWS. Covers multi-tier architectures, cost optimisation strategies, and security best practices across core AWS services.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- WORK EXPERIENCE -->
+    <section id="page-experience" class="page">
+      <div class="page-header">
+        <p class="page-label">Career</p>
+        <h2 class="page-title">Work Experience</h2>
+      </div>
+      <div class="card-list">
+        <div class="card">
+          <p class="card-meta">2022 – Present</p>
+          <h3 class="card-title">Senior Frontend Engineer</h3>
+          <p class="card-subtitle">Stripe · Remote</p>
+          <p class="card-body">Lead engineer on the Stripe Dashboard redesign, reducing average task completion time by 28%. Established the team's component library, now used across four product verticals. Mentoring a team of three mid-level engineers and driving quarterly architecture reviews.</p>
+        </div>
+        <div class="card">
+          <p class="card-meta">2021 – 2022</p>
+          <h3 class="card-title">Full-Stack Developer</h3>
+          <p class="card-subtitle">Blendle · Amsterdam, Netherlands</p>
+          <p class="card-body">Built and maintained the reader application serving 800 000 monthly active users. Introduced end-to-end testing with Playwright, cutting regression bugs by 40%. Collaborated closely with product and design to ship a new onboarding flow that lifted 7-day retention by 15%.</p>
+        </div>
+        <div class="card">
+          <p class="card-meta">2019 – 2021</p>
+          <h3 class="card-title">Junior Developer</h3>
+          <p class="card-subtitle">Coolblue · Rotterdam, Netherlands</p>
+          <p class="card-body">Developed internal tooling for the logistics team, automating manual warehouse reporting processes. Contributed to the public-facing product catalogue API, improving response times by 35% through query optimisation and caching.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section id="page-skills" class="page">
+      <div class="page-header">
+        <p class="page-label">Capabilities</p>
+        <h2 class="page-title">Skills</h2>
+      </div>
+      <div class="skills-grid">
+        <div class="skill-group">
+          <p class="skill-group-title">Languages</p>
+          <div class="skill-tags">
+            <span class="tag">TypeScript</span>
+            <span class="tag">JavaScript</span>
+            <span class="tag">Python</span>
+            <span class="tag">SQL</span>
+            <span class="tag">Rust</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <p class="skill-group-title">Frontend</p>
+          <div class="skill-tags">
+            <span class="tag">React</span>
+            <span class="tag">Next.js</span>
+            <span class="tag">Svelte</span>
+            <span class="tag">CSS / Tailwind</span>
+            <span class="tag">Figma</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <p class="skill-group-title">Backend</p>
+          <div class="skill-tags">
+            <span class="tag">Node.js</span>
+            <span class="tag">FastAPI</span>
+            <span class="tag">PostgreSQL</span>
+            <span class="tag">Redis</span>
+            <span class="tag">GraphQL</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <p class="skill-group-title">Infrastructure</p>
+          <div class="skill-tags">
+            <span class="tag">AWS</span>
+            <span class="tag">Docker</span>
+            <span class="tag">Kubernetes</span>
+            <span class="tag">GitHub Actions</span>
+            <span class="tag">Terraform</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <p class="skill-group-title">Practices</p>
+          <div class="skill-tags">
+            <span class="tag">TDD</span>
+            <span class="tag">CI/CD</span>
+            <span class="tag">Agile</span>
+            <span class="tag">Accessibility</span>
+            <span class="tag">Code review</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <p class="skill-group-title">Soft Skills</p>
+          <div class="skill-tags">
+            <span class="tag">Mentoring</span>
+            <span class="tag">Public speaking</span>
+            <span class="tag">Technical writing</span>
+            <span class="tag">Cross-team collaboration</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- INTERESTS -->
+    <section id="page-interests" class="page">
+      <div class="page-header">
+        <p class="page-label">Outside Work</p>
+        <h2 class="page-title">Interests</h2>
+      </div>
+      <div class="interest-grid">
+        <div class="interest-card">
+          <div class="interest-icon">📷</div>
+          <h3 class="interest-name">Film Photography</h3>
+          <p class="interest-desc">I shoot 35mm film on weekend walks around Dutch cities. There's something about the slower, deliberate process that feeds back into how I approach design problems.</p>
+        </div>
+        <div class="interest-card">
+          <div class="interest-icon">🧗</div>
+          <h3 class="interest-name">Rock Climbing</h3>
+          <p class="interest-desc">Bouldering three times a week at a local gym, with occasional outdoor trips to the Ardennes. Climbing has taught me patience and how to break down seemingly impossible problems.</p>
+        </div>
+        <div class="interest-card">
+          <div class="interest-icon">📚</div>
+          <h3 class="interest-name">Reading</h3>
+          <p class="interest-desc">Mostly non-fiction — philosophy of technology, cognitive science, and the occasional history of computing. Recent favourites include works by Ursula Franklin and Ruha Benjamin.</p>
+        </div>
+        <div class="interest-card">
+          <div class="interest-icon">🎵</div>
+          <h3 class="interest-name">Music Production</h3>
+          <p class="interest-desc">Producing ambient and electronic music as a hobby. I find the creative constraints of working with sound a useful counterbalance to the logic-driven world of software.</p>
+        </div>
+        <div class="interest-card">
+          <div class="interest-icon">🌍</div>
+          <h3 class="interest-name">Open Source</h3>
+          <p class="interest-desc">Regular contributor to accessibility tooling projects. I believe the open web is a public good and try to contribute back wherever I can find time.</p>
+        </div>
+        <div class="interest-card">
+          <div class="interest-icon">🍳</div>
+          <h3 class="interest-name">Cooking</h3>
+          <p class="interest-desc">Experimenting with fermentation and Southeast Asian cuisines. Hosting dinner parties is one of my favourite ways to bring people together outside of work.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- REFERENCES -->
+    <section id="page-references" class="page">
+      <div class="page-header">
+        <p class="page-label">Testimonials</p>
+        <h2 class="page-title">References</h2>
+      </div>
+      <div class="card-list">
+        <div class="ref-card">
+          <p class="ref-quote">"Alex has a rare ability to hold both the technical and human sides of a problem at once. Their work on our dashboard was transformative — not just in quality but in how they brought the whole team along."</p>
+          <p class="ref-name">Sarah Okonkwo</p>
+          <p class="ref-role">Engineering Manager, Stripe · Direct manager 2022–present</p>
+        </div>
+        <div class="ref-card">
+          <p class="ref-quote">"In two years at Blendle, Alex raised the bar for what good frontend engineering looks like. Their testing culture has outlasted them and their instinct for product thinking made every handoff genuinely collaborative."</p>
+          <p class="ref-name">Joris van den Berg</p>
+          <p class="ref-role">CTO, Blendle · Direct manager 2021–2022</p>
+        </div>
+        <div class="ref-card">
+          <p class="ref-quote">"Alex was one of the most curious and driven students in our MSc cohort. Their research was rigorous, their writing clear, and their ability to communicate complex ideas to non-specialists was exceptional."</p>
+          <p class="ref-name">Prof. Dr. Inge Visser</p>
+          <p class="ref-role">Thesis supervisor, TU Delft · 2019–2021</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    const pages = ['home','education','experience','skills','interests','references'];
+
+    function showPage(id) {
+      pages.forEach(p => {
+        const el = document.getElementById('page-' + p);
+        el.classList.toggle('active', p === id);
+      });
+
+      // update active dropdown item
+      document.querySelectorAll('.dropdown-item').forEach(item => {
+        const page = item.textContent.trim().toLowerCase().replace(' ', '');
+        const map = {
+          'education': 'education',
+          'workexperience': 'experience',
+          'skills': 'skills',
+          'interests': 'interests',
+          'references': 'references'
+        };
+        item.classList.toggle('active', map[page] === id);
+      });
+
+      closeDropdown();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function toggleDropdown() {
+      document.getElementById('nav-dropdown').classList.toggle('open');
+    }
+
+    function closeDropdown() {
+      document.getElementById('nav-dropdown').classList.remove('open');
+    }
+
+    document.addEventListener('click', e => {
+      if (!document.getElementById('nav-dropdown').contains(e.target)) {
+        closeDropdown();
+      }
+    });
+  </script>
+</body>
+</html>
