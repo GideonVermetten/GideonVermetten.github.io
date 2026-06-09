@@ -144,11 +144,41 @@
       display: flex;
       align-items: center;
       padding: 5rem 2.5rem;
-      max-width: 900px;
+      max-width: 1000px;
       margin: 0 auto;
     }
 
-    .hero-inner { max-width: 680px; }
+    .hero-inner {
+      display: flex;
+      align-items: center;
+      gap: 4rem;
+      width: 100%;
+    }
+
+    .hero-text { flex: 1; min-width: 0; }
+
+    .hero-photo {
+      flex-shrink: 0;
+      width: 280px;
+      height: 340px;
+      border-radius: 18px;
+      overflow: hidden;
+      border: 3px solid var(--border);
+      box-shadow: 0 8px 40px rgba(0,0,0,0.4);
+    }
+
+    .hero-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+    }
+
+    @media (max-width: 700px) {
+      .hero-inner { flex-direction: column-reverse; gap: 2rem; }
+      .hero-photo { width: 160px; height: 196px; align-self: center; }
+    }
 
     .hero-eyebrow {
       font-size: 0.75rem;
@@ -373,15 +403,20 @@
     <!-- HOME -->
     <section id="page-home" class="active">
       <div class="hero-inner">
-        <p class="hero-eyebrow">Portfolio — 2024</p>
-        <h1 class="hero-name">Gideon<br /><em>Vermetten</em></h1>
-        <p class="hero-bio">
-          Data professional with a strong desire to make a measurable impact to society using analytics. My educational background bridges business, people, and data, enabling me to quickly learn the nuances of new sectors — and positioning me to bridge the gap between technical analyses and real-world business issues. I believe successful analytics always starts with a keen understanding of stakeholder objectives.
-        </p>
-        <button class="hero-cta" onclick="showPage('experience')">
-          View my work
-          <span style="font-size:1rem;line-height:1">→</span>
-        </button>
+        <div class="hero-text">
+          <p class="hero-eyebrow">Portfolio — 2024</p>
+          <h1 class="hero-name">Gideon<br /><em>Vermetten</em></h1>
+          <p class="hero-bio">
+            Data professional with a strong desire to make a measurable impact to society using analytics. My educational background bridges business, people, and data, enabling me to quickly learn the nuances of new sectors — and positioning me to bridge the gap between technical analyses and real-world business issues. I believe successful analytics always starts with a keen understanding of stakeholder objectives.
+          </p>
+          <button class="hero-cta" onclick="showPage('experience')">
+            View my work
+            <span style="font-size:1rem;line-height:1">→</span>
+          </button>
+        </div>
+        <div class="hero-photo">
+          <img src="profile.jpg" alt="Gideon Vermetten" />
+        </div>
       </div>
     </section>
 
@@ -519,8 +554,8 @@
       <div class="interest-grid">
         <div class="interest-card">
           <div class="interest-icon">📷</div>
-          <h3 class="interest-name">Film Photography</h3>
-          <p class="interest-desc">I shoot 35mm film on weekend walks around Dutch cities. There's something about the slower, deliberate process that feeds back into how I approach design problems.</p>
+          <h3 class="interest-name">Traveling</h3>
+          <p class="interest-desc">I enjoy traveling all around the world, especially far into nature. There is something about nature being untouched that makes me really calm.</p>
         </div>
         <div class="interest-card">
           <div class="interest-icon">🧗</div>
@@ -534,8 +569,8 @@
         </div>
         <div class="interest-card">
           <div class="interest-icon">🎵</div>
-          <h3 class="interest-name">Music Production</h3>
-          <p class="interest-desc">Producing ambient and electronic music as a hobby. I find the creative constraints of working with sound a useful counterbalance to the logic-driven world of software.</p>
+          <h3 class="interest-name">Music</h3>
+          <p class="interest-desc">Playing acoustic guitar myself, and listening to mostly old rock, indie, country, folk music. Any song where you can hear the actual instruments rather than electronics suits me.</p>
         </div>
         <div class="interest-card">
           <div class="interest-icon">🌍</div>
